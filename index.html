@@ -1,0 +1,411 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   sketchcars.com
+  </title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+   <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #4b0082;
+        margin: 0;
+        padding: 0;
+      }
+      .header {
+        background-color: #4b0082;
+        color: #ffffff;
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .header .menu-icon, .header .user-icon {
+        font-size: 24px;
+        cursor: pointer;
+      }
+      .sidebar, .user-sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        background-color: #4b0082;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+      .sidebar {
+        left: 0;
+      }
+      .user-sidebar {
+        right: 0;
+      }
+      .sidebar a, .user-sidebar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+      }
+      .sidebar a:hover, .user-sidebar a:hover {
+        color: #f1f1f1;
+      }
+      .sidebar .closebtn, .user-sidebar .closebtn {
+        position: absolute;
+        font-size: 36px;
+      }
+      .sidebar .closebtn {
+        top: 0;
+        right: 25px;
+        margin-left: 50px;
+      }
+      .user-sidebar .closebtn {
+        top: 0;
+        left: 25px;
+        margin-right: 50px;
+      }
+      .main-content {
+        text-align: center;
+        padding: 20px;
+        transition: margin-left 0.5s, margin-right 0.5s;
+      }
+      .car-images {
+        border: 2px solid #4b0082;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      .car-images img {
+        width: 100%;
+        height: auto;
+      }
+      .introduction {
+        background-color: #4b0082;
+        color: #ffffff;
+        padding: 20px;
+        text-align: left;
+        position: relative;
+      }
+      .introduction h2 {
+        margin-top: 0;
+      }
+      .contact {
+        margin-top: 20px;
+      }
+      #dynamic-brand {
+        color: #000000;
+      }
+      .footer {
+        background-color: #4b0082;
+        color: #ffffff;
+        padding: 20px;
+        text-align: left;
+        position: relative;
+      }
+      .footer img {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        width: 100px;
+        height: auto;
+      }
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 18px;
+        }
+        .sidebar a, .user-sidebar a {
+          font-size: 20px;
+        }
+        .main-content {
+          padding: 10px;
+        }
+        .car-images {
+          margin: 10px 0;
+        }
+        .introduction {
+          padding: 10px;
+        }
+        .footer {
+          padding: 10px;
+        }
+        .footer img {
+          width: 50px;
+        }
+      }
+      .dropdown-container {
+        display: none;
+        background-color: #4b0082;
+        padding-left: 8px;
+      }
+      .dropdown-btn {
+        font-size: 25px;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        padding: 8px 8px 8px 32px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      .dropdown-btn:hover {
+        color: #f1f1f1;
+      }
+      .dropdown-container a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+      }
+      .dropdown-container a:hover {
+        color: #f1f1f1;
+      }
+   </style>
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const brands = ["Ferrari", "Porsche", "BMW", "Lamborghini", "Audi"];
+        let index = 0;
+        const brandElement = document.getElementById("dynamic-brand");
+        let currentBrand = brands[index];
+        let charIndex = 0;
+
+        function typeBrand() {
+          if (charIndex < currentBrand.length) {
+            brandElement.textContent += currentBrand[charIndex];
+            charIndex++;
+            setTimeout(typeBrand, 200);
+          } else {
+            setTimeout(eraseBrand, 2000);
+          }
+        }
+
+        function eraseBrand() {
+          if (charIndex > 0) {
+            brandElement.textContent = currentBrand.substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(eraseBrand, 100);
+          } else {
+            index = (index + 1) % brands.length;
+            currentBrand = brands[index];
+            setTimeout(typeBrand, 500);
+          }
+        }
+
+        typeBrand();
+
+        const brandList = "Ferrari, Porsche, BMW..........& more brands";
+        const brandListElement = document.getElementById("dynamic-brand-list");
+        let listCharIndex = 0;
+
+        function typeBrandList() {
+          if (listCharIndex < brandList.length) {
+            brandListElement.textContent += brandList[listCharIndex];
+            listCharIndex++;
+            setTimeout(typeBrandList, 100);
+          }
+        }
+
+        typeBrandList();
+
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+            } else {
+              dropdownContent.style.display = "block";
+            }
+          });
+        }
+      });
+
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+      }
+
+      function openUserNav() {
+        document.getElementById("userSidebar").style.width = "250px";
+        document.getElementById("main").style.marginRight = "250px";
+      }
+
+      function closeUserNav() {
+        document.getElementById("userSidebar").style.width = "0";
+        document.getElementById("main").style.marginRight= "0";
+      }
+   </script>
+  </link>
+ </head>
+ <body>
+  <div class="header">
+   <i class="fas fa-bars menu-icon" onclick="openNav()">
+   </i>
+   <h1>
+    sketchcars.com
+   </h1>
+   <i class="fas fa-user user-icon" onclick="openUserNav()">
+   </i>
+  </div>
+  <div class="sidebar" id="mySidebar">
+   <a class="closebtn" href="javascript:void(0)" onclick="closeNav()">
+    ×
+   </a>
+   <button class="dropdown-btn">
+    Ferrari
+   </button>
+   <div class="dropdown-container">
+    <a href="#">
+     Ferrari Enzo
+    </a>
+    <a href="#">
+     Ferrari F40
+    </a>
+    <a href="#">
+     Ferrari 488
+    </a>
+   </div>
+   <button class="dropdown-btn">
+    Porsche
+   </button>
+   <div class="dropdown-container">
+    <a href="#">
+     Porsche 911
+    </a>
+    <a href="#">
+     Porsche Cayenne
+    </a>
+    <a href="#">
+     Porsche Panamera
+    </a>
+   </div>
+   <button class="dropdown-btn">
+    BMW
+   </button>
+   <div class="dropdown-container">
+    <a href="#">
+     BMW M3
+    </a>
+    <a href="#">
+     BMW X5
+    </a>
+    <a href="#">
+     BMW i8
+    </a>
+   </div>
+   <button class="dropdown-btn">
+    Lamborghini
+   </button>
+   <div class="dropdown-container">
+    <a href="#">
+     Lamborghini Aventador
+    </a>
+    <a href="#">
+     Lamborghini Huracan
+    </a>
+    <a href="#">
+     Lamborghini Urus
+    </a>
+   </div>
+   <button class="dropdown-btn">
+    Audi
+   </button>
+   <div class="dropdown-container">
+    <a href="#">
+     Audi A4
+    </a>
+    <a href="#">
+     Audi Q7
+    </a>
+    <a href="#">
+     Audi R8
+    </a>
+   </div>
+  </div>
+  <div class="user-sidebar" id="userSidebar">
+   <a class="closebtn" href="javascript:void(0)" onclick="closeUserNav()">
+    ×
+   </a>
+   <a href="#">
+    Profile
+   </a>
+   <a href="#">
+    Settings
+   </a>
+   <a href="#">
+    Logout
+   </a>
+  </div>
+  <div class="main-content" id="main">
+   <p>
+    |Design your own
+    <span id="dynamic-brand">
+     car
+    </span>
+    ...
+   </p>
+   <div class="car-images">
+    <h2>
+     Ferrari Enzo
+    </h2>
+    <img alt="Blueprint of Ferrari Enzo showing side, front, and top views with dimensions" height="400" src="https://storage.googleapis.com/a1aa/image/KFdlcfWnUWXTcyHY2pef24af79GebIShTpng6HZzfV6Svf22JA.jpg" width="600"/>
+   </div>
+   <div class="car-images">
+    <h2>
+     Ferrari F40
+    </h2>
+    <img alt="Blueprint of Ferrari F40 showing side, front, and top views with dimensions" height="400" src="https://storage.googleapis.com/a1aa/image/KbR63UAtiF4VBFbMExUaQ6m6yabuO25yAcAm2hkBiAIvf22JA.jpg" width="600"/>
+   </div>
+   <p id="dynamic-brand-list">
+   </p>
+  </div>
+  <div class="introduction">
+   <h2>
+    Introduction
+   </h2>
+   <hr/>
+   <p>
+    Here's a short introduction about myself :
+   </p>
+   <p>
+    "My name is Siddhesh Jadhav, and I hold a B-Tech in Mechanical Engineering. With over 8 years of experience in automotive design, I have worked on more than 500 cars. I possess in-depth expertise in CAD-CAM software, allowing me to bring innovative and precise designs to life in the automotive industry."
+   </p>
+   <div class="contact">
+    <h2>
+     contact us :
+    </h2>
+    <p>
+     Whatsapp
+    </p>
+    <p>
+     Instagram
+    </p>
+    <p>
+     Email
+    </p>
+    <p>
+     Linkdin
+    </p>
+   </div>
+  </div>
+ 
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+ </body>
+</html>
